@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from apps.product.models import Product, Category, Models, ProductImage
-
+from apps.product.models import Product, Category, Models, ProductImage 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
@@ -23,7 +22,7 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_first_images(self, onj):
         first_images = onj.images.first()
         if first_images:
-            return first_images.image.url
+            return first_images.images.url
         return None 
     
 
@@ -99,3 +98,17 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         for imag in images_data:
             ProductImage.objects.create(product=product, image=imag)
         return product 
+
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ["id", "image"]
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Product
+        fields = "__all__" 
