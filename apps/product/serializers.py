@@ -112,3 +112,36 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__" 
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+class CategoryCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['title']
+
+
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'title', 'created_at'] 
+
+class ModelsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Models
+        fields = '__all__'
+
+
+class ModelsCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Models
+        fields = ['title', 'category']
+
+
+class ModelsDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Models
+        fields = ['id', 'title', 'category']

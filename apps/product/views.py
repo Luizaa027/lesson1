@@ -106,7 +106,9 @@ from rest_framework.generics import CreateAPIView
 from rest_framework import mixins 
 from rest_framework.viewsets import GenericViewSet
 
-from apps.product.models import Product
+from apps.product.models import Product , Category , Models 
+from apps.product.serializers import ModelsSerializer, ModelsCreateSerializer, ModelsDetailSerializer
+from apps.product.serializers import CategorySerializer, CategoryCreateSerializer, CategoryDetailSerializer
 from apps.product.serializers import ProductSerializer, ProductDetailSerializer, ProductCreateSerializer
 
 class ProductViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, GenericViewSet , mixins.UpdateModelMixin ):    
@@ -122,6 +124,50 @@ class ProductViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cr
         elif self.action == 'update':
             return ProductDetailSerializer
         return ProductSerializer 
+
+
+class CategoryViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    GenericViewSet
+):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return CategoryCreateSerializer
+        elif self.action == 'retrieve':
+            return CategoryDetailSerializer
+        elif self.action in ['update', 'partial_update']:
+            return CategoryCreateSerializer
+        return CategorySerializer 
+    
+class ModelsViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    GenericViewSet
+):
+    queryset = Models.objects.all()
+    serializer_class = ModelsSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return ModelsCreateSerializer
+        elif self.action == 'retrieve':
+            return ModelsDetailSerializer
+        elif self.action in ['update', 'partial_update']:
+            return ModelsCreateSerializer
+        return ModelsSerializer    
+    
+
+
 
 
 

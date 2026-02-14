@@ -8,3 +8,12 @@
 #     path("product", ProductCreateAPIView.as_view(), name='product_list'),
 # ] 
 
+from rest_framework.routers import DefaultRouter
+from .views import CategoryViewSet, ModelsViewSet
+
+router = DefaultRouter()
+router.register(r'products', ProductViewSet, basename='products')
+router.register(r'categories', CategoryViewSet, basename='categories')
+router.register(r'models', ModelsViewSet, basename='models')
+
+urlpatterns = router.urls
