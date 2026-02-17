@@ -144,4 +144,10 @@ class ModelsCreateSerializer(serializers.ModelSerializer):
 class ModelsDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Models
-        fields = ['id', 'title', 'category']
+        fields = ['id', 'title', 'category'] 
+
+class FavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = ["id", "user", "product"]
+        read_only_fields = ["id", "created_at"]        

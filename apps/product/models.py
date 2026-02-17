@@ -1,5 +1,9 @@
 from django.db import models
-import uuid
+import uuid 
+from django.contrib.auth.models import User
+from django.conf import settings
+
+
 
 class Category(models.Model):
     title = models.CharField(
@@ -101,3 +105,25 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = 'Фото продукта'
         verbose_name_plural = 'Фото продукта'
+
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name='favorites'
+    )
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE,
+        related_name='favorited_by'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        unique_together = ("user", "product")
+        verbose_name = "Избранное"
+        verbose_name_plural = "Избранные"
+
+    def __str__(self):
+        return f"{self.user} {self.product}"
+
